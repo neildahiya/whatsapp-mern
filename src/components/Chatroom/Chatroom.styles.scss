@@ -1,0 +1,18 @@
+.chat-room {
+  background-color: rgb(243, 243, 243);
+  margin: 1% 2%;
+  width: 100%;
+  height: 95vh;
+  display: flex;
+
+  box-shadow: 0px 0px 10px #9c9b9b;
+  //   flex-direction: column;
+}
+.sidebar {
+  flex: 1;
+  height: 100%;
+  background-color: white;
+}
+.chat-area {
+  flex: 2;
+}
