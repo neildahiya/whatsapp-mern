@@ -1,6 +1,11 @@
+* {
+  padding: 0px;
+  margin: 0px;
+}
 .App {
   display: grid;
+  padding: 20px 60px;
   place-items: center;
-  height: 100vh;
+  height: 95vh;
   box-sizing: border-box;
 }

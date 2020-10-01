@@ -9,7 +9,7 @@ class Sidebar extends Component {
       <div className="sidebar">
         <SidebarHeader />
         <SidebarSearch />
-        <ChatContact />
+        <ChatContact className="active" />
         <ChatContact />
         <ChatContact />
       </div>

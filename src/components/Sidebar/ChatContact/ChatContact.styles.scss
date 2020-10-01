@@ -6,8 +6,9 @@
   //   background-color: aqua;
 }
 .chat-contact:hover {
-  background-color: #ebebeb;
+  background-color: #f3f0f0;
 }
+
 .person-img {
   flex: 1;
   display: grid;
@@ -25,6 +26,9 @@
   display: grid;
   place-items: center;
   padding-right: 10px;
+  color: grey;
+  font-size: 13px;
+  top: 0;
 }
 #name {
   font-size: 15px;
