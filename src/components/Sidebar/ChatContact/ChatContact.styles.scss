@@ -1,0 +1,36 @@
+.chat-contact {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  border-bottom: 1px solid rgb(230, 229, 229);
+  //   background-color: aqua;
+}
+.chat-contact:hover {
+  background-color: #ebebeb;
+}
+.person-img {
+  flex: 1;
+  display: grid;
+  place-items: center;
+}
+.person-image {
+  size: 50px;
+}
+.name-and-message {
+  flex: 3;
+  //   font-size: 15px;
+}
+.timestamp {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding-right: 10px;
+}
+#name {
+  font-size: 15px;
+  margin-bottom: 0px;
+}
+#last-mess {
+  font-size: 12px;
+  color: grey;
+}
