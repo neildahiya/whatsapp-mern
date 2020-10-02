@@ -1,5 +1,22 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+
+# MERN Whatsapp Clone
+
+## Parts Completed
+- Front end componenets made
+- Redux work almost done
+## Parts yet to be done
+- Backend using NodeJS
+- Simulating MongoDB as realtime using Sockets or Pusher
+
+
+
+
+
+
+
+
 ## Available Scripts
 
 In the project directory, you can run:
