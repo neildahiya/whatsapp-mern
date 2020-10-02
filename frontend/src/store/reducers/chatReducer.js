@@ -83,9 +83,8 @@ export const chatReducer = (state = initState, action) => {
       // console.log(action.payload);
       const newChats = [];
       for (var chat of state.chats) {
-        console.log(chat.id + " " + action.payload.id);
+        // console.log(chat.id + " " + action.payload.id);
         if (chat.id == action.payload.id) {
-          console.log("changin this ID" + chat.id);
           let chatToPush = {
             id: chat.id,
             otherPerson: chat.otherPerson,
