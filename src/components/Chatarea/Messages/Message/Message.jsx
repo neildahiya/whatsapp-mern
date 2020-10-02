@@ -1,6 +1,7 @@
 import React from "react";
+import moment from "moment";
 import "./Message.styles.scss";
-const Message = ({ isSender }) => {
+const Message = ({ message, isSender }) => {
   return (
     <div className="message">
       <p
@@ -10,8 +11,8 @@ const Message = ({ isSender }) => {
             : { float: "left" }
         }
       >
-        Message Message Message Message Message Message Message Message Message
-        <span>5:00 AM</span>
+        {message.text}
+        <span>{moment(message.timestamp).format("h:mm a")}</span>
       </p>
     </div>
   );

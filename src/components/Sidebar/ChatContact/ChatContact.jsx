@@ -1,18 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ChatContact.styles.scss";
 import FaceIcon from "@material-ui/icons/Face";
 
-const ChatContact = () => {
+const ChatContact = ({ chat }) => {
+  const [lastDetails, setLastDetails] = useState({
+    lastMessage: "",
+    lastTime: "",
+  });
+
   return (
     <div className="chat-contact">
-      <div className="person-img">
+      <div className="person-img" id={chat.id}>
         <FaceIcon style={{ fontSize: 50 }} className="person-image" />
       </div>
-      <div className="name-and-message">
-        <p id="name">Neil Dahiya</p>
-        <p id="last-mess">This was his last message</p>
+      <div className="name-and-message" id={chat.id}>
+        <p className="name" id={chat.id}>
+          {chat.otherPerson}
+        </p>
+        <p className="last-mess" id={chat.id}>
+          This was his last message
+        </p>
       </div>
-      <div className="timestamp">5:00 AM</div>
+      <div className="timestamp" id={chat.id}>
+        5:00 AM
+      </div>
     </div>
   );
 };

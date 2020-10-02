@@ -12,3 +12,11 @@
   padding: 0px 15px;
   align-items: center;
 }
+.left {
+  display: flex;
+  flex-direction: row;
+}
+h4 {
+  padding-top: 4px;
+  padding-left: 10px;
+}
