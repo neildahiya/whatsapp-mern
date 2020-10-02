@@ -12,4 +12,8 @@ const UserSchema = new mongoose.Schema({
       ref: "chat",
     },
   ],
+  email: {
+    type: String,
+  },
 });
+module.exports = mongoose.model("User", UserSchema);
