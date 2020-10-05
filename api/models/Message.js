@@ -5,12 +5,16 @@ const MessageSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  isSender: {
-    type: Boolean,
+  fromPerson: {
+    type: String,
+    required: true,
+  },
+  otherPerson: {
+    type: String,
     required: true,
   },
   timestamp: {
-    type: Boolean,
+    type: String,
     required: true,
   },
 });

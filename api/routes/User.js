@@ -78,9 +78,14 @@ userRouter.get(
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     const allUsers = await User.find();
-    for (var user of allUsers) {
-      console.log(user);
-    }
+    res.status(200).send(JSON.stringify(allUsers));
+  }
+);
+userRouter.get(
+  "/getAllUsers",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const allUsers = await User.find();
     res.status(200).send(JSON.stringify(allUsers));
   }
 );

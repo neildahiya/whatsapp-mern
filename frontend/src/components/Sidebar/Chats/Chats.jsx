@@ -8,6 +8,9 @@ class Chats extends Component {
   handleClick = (e) => {
     this.props.changeActive(e.target.id);
   };
+  componentDidMount() {
+    // getAllChats();
+  }
   render() {
     const { chats } = this.props;
     return (
@@ -36,6 +39,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     changeActive: (id) => dispatch(changeActive(id)),
+    // getAllChats: () => dispatch(getAllChats()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Chats);

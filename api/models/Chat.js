@@ -3,7 +3,11 @@ const Message = require("./Message");
 
 const ChatSchema = new mongoose.Schema({
   id: {
-    type: Number,
+    type: String,
+    required: true,
+  },
+  fromPerson: {
+    type: String,
     required: true,
   },
   otherPerson: {

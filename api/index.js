@@ -36,13 +36,12 @@ app.get(
   }
 );
 
+// Socket Setup
 io.on("connection", (socket) => {
   socket.on("new chat page", (msg) => {
     console.log("person: " + JSON.stringify(msg));
   });
 });
-
-// server.listen(3000);
 
 // Listen
 const PORT = process.env.PORT || 5000;
