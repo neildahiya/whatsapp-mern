@@ -10,13 +10,12 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { connect } from "react-redux";
 import { compose } from "redux";
-import { Redirect } from "react-router-dom";
-import { login } from "../../store/actions/authActions";
-// import "./LoginPage.styles.scss";
+import { connect } from "react-redux";
+import { register } from "../../store/actions/authActions";
+
 const useStyles = (theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -30,17 +29,18 @@ const useStyles = (theme) => ({
   },
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(3),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
 });
-class LoginPage extends Component {
+
+class SignUpPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
+      username: "",
       email: "",
       password: "",
     };
@@ -53,17 +53,17 @@ class LoginPage extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     const user = {
-      username: this.state.email,
+      username: this.state.username,
+      email: this.state.email,
       password: this.state.password,
+      role: "admin",
     };
-    this.props.login(user);
+    this.props.register(user);
+    // this.props.history.push("/login");
   };
-
   render() {
-    const { isLoggedIn, classes } = this.props;
-    if (isLoggedIn) {
-      return <Redirect to="/chat" />;
-    }
+    const { classes } = this.props;
+
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -72,34 +72,50 @@ class LoginPage extends Component {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign up
           </Typography>
-          <form onSubmit={this.onSubmit} className={classes.form} noValidate>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              onChange={this.onChange}
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              variant="outlined"
-              onChange={this.onChange}
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
+          <form className={classes.form} noValidate onSubmit={this.onSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={12}>
+                <TextField
+                  onChange={this.onChange}
+                  autoComplete="name"
+                  name="username"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="name"
+                  label="Name"
+                  autoFocus
+                />
+              </Grid>
 
+              <Grid item xs={12}>
+                <TextField
+                  onChange={this.onChange}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  onChange={this.onChange}
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                />
+              </Grid>
+            </Grid>
             <Button
               type="submit"
               fullWidth
@@ -107,21 +123,18 @@ class LoginPage extends Component {
               color="primary"
               className={classes.submit}
             >
-              Sign In
+              Sign Up
             </Button>
-            <Grid container>
-              <Grid item xs>
-                {" "}
-              </Grid>
+            <Grid container justify="flex-end">
               <Grid item>
                 <Link
-                  to="/signup"
-                  variant="body2"
+                  to="/login"
                   onClick={() => {
-                    this.props.history.push("/signup");
+                    this.props.history.push("/");
                   }}
+                  variant="body2"
                 >
-                  {"Don't have an account? Sign Up"}
+                  Already have an account? Sign in
                 </Link>
               </Grid>
             </Grid>
@@ -133,18 +146,10 @@ class LoginPage extends Component {
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    login: (user) => dispatch(login(user)),
-  };
-};
-const mapStateToProps = (state) => {
-  return {
-    isLoggedIn: state.auth.isLoggedIn,
-    user: state.auth.user,
-    loginErr: state.auth.loginErr,
-    loginErrMsg: state.auth.loginErrMsg,
+    register: (user) => dispatch(register(user)),
   };
 };
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  // connect(null, mapDispatchToProps),
   withStyles(useStyles, { withTheme: true })
-)(LoginPage);
+)(connect(null, mapDispatchToProps)(SignUpPage));

@@ -3,15 +3,18 @@ const app = express();
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const colors = require("colors");
-const passport = require("passport");
-const authRoutes = require("./routes/authRoutes");
+const cookieParser = require("cookie-parser");
+// const passport = require("passport");
+const userRouter = require("./routes/User");
+// const authRoutes = require("./routes/authRoutes");
 const connectDB = require("./config/db");
 dotenv.config({ path: "./config/config.env" });
 require("./config/passport");
 
 // Middlewares
+app.use(cookieParser());
 app.use(express.json());
-app.use(passport.initialize());
+// app.use(passport.initialize());
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
@@ -20,7 +23,9 @@ if (process.env.NODE_ENV === "development") {
 connectDB();
 
 // Routes
-app.use("/auth/google", authRoutes);
+// app.use("/auth/google", authRoutes);
+app.use("/user", userRouter);
+
 app.get(
   "/",
   // passport.authenticate("google", { failureRedirect: "/", session: false }),
