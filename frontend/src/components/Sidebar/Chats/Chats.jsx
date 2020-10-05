@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import { changeActive } from "../../../store/actions/chatActions";
 class Chats extends Component {
   handleClick = (e) => {
-    // console.log(e.target);
     this.props.changeActive(e.target.id);
   };
   render() {

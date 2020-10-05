@@ -56,12 +56,12 @@ const initState = {
           timestamp: new Date().toUTCString(),
         },
         {
-          text: "Hello Neilllllllllllllllllllll",
+          text: "Hello Neil",
           isSender: false,
           timestamp: new Date().toUTCString(),
         },
         {
-          text: "Hello Neilllllllllllllllllllllll",
+          text: "Hello Neil",
           isSender: false,
           timestamp: new Date().toUTCString(),
         },
@@ -115,7 +115,6 @@ export const chatReducer = (state = initState, action) => {
         active: action.active,
       };
     default:
-      console.log("here");
       return state;
   }
 };

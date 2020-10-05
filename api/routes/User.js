@@ -73,6 +73,17 @@ userRouter.get(
     res.json({ user: { username: "", role: "" }, success: true });
   }
 );
+userRouter.get(
+  "/allChats",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const allUsers = await User.find();
+    for (var user of allUsers) {
+      console.log(user);
+    }
+    res.status(200).send(JSON.stringify(allUsers));
+  }
+);
 
 // userRouter.post('/todo',passport.authenticate('jwt',{session : false}),(req,res)=>{
 //     const todo = new Todo(req.body);
