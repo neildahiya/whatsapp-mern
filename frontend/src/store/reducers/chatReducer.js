@@ -1,4 +1,5 @@
 const initState = {
+  allUsers: [],
   chats: [
     {
       id: 0,
@@ -73,10 +74,11 @@ const initState = {
       ],
     },
   ],
+  messages: [],
   active: 0,
 };
 export const chatReducer = (state = initState, action) => {
-  console.log(action);
+  // console.log(action.type);
   switch (action.type) {
     case "SEND_MESSAGE":
       // console.log("in reducer");
@@ -107,12 +109,22 @@ export const chatReducer = (state = initState, action) => {
         ...state,
         chats: newChats,
       };
+    case "GOT_MESSAGES":
+      // console.log(action.response);
+      return {
+        ...state,
+        messages: action.response,
+      };
 
     case "CHANGE_ACTIVE_CHAT":
-      // console.log(action.active);
       return {
         ...state,
         active: action.active,
+      };
+    case "GOT_ALL_USERS":
+      return {
+        ...state,
+        allUsers: action.response,
       };
     default:
       return state;

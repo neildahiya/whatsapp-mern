@@ -1,30 +1,44 @@
 export default {
-  getAllChats: () => {
-    return fetch("/user/todos").then((response) => {
-      if (response.status !== 401) {
-        return response.json().then((data) => data);
-      } else return { message: { msgBody: "UnAuthorized", msgError: true } };
+  getChat: (user) => {
+    return fetch("/user/getChat", {
+      method: "get",
+      body: JSON.stringify(user),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.status !== 401) return res.json().then((data) => data);
+      else return { isAuthenticated: false, user: { username: "", role: "" } };
     });
   },
-  getChat: (payload) => {
-    // const {fromPerson, otherPerson} = payload
-    // Chat.findOne({
-    //   fromPerson, otherPerson
-    // }).then(chat=>{
-    //   resizeBy.status(200).send(JSON.stringify(chat))
-    // }).catch()
+  sendMessage: (payload) => {
+    return fetch("/chat/sendMessage", {
+      method: "post",
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.status !== 401 && res.status !== 500)
+        return res.json().then((data) => data);
+      else return { isAuthenticated: false, user: { username: "", role: "" } };
+    });
   },
-  // postTodo: (todo) => {
-  //   return fetch("/user/todo", {
-  //     method: "post",
-  //     body: JSON.stringify(todo),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   }).then((response) => {
-  //     if (response.status !== 401) {
-  //       return response.json().then((data) => data);
-  //     } else return { message: { msgBody: "UnAuthorized" }, msgError: true };
-  //   });
-  // },
+  getAllMessages: (payload) => {
+    // console.log(payload);
+    return fetch("/chat/getAllMessages", {
+      method: "post",
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.status !== 401 && res.status !== 500)
+        return res.json().then((data) => {
+          // console.log(data);
+          return data;
+        });
+      else return { isAuthenticated: false, user: { username: "", role: "" } };
+    });
+  },
 };

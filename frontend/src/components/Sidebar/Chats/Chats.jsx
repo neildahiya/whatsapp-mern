@@ -3,22 +3,42 @@ import ChatContact from "../ChatContact/ChatContact";
 import "./Chats.styles.scss";
 import { v4 as uuidv4 } from "uuid";
 import { connect } from "react-redux";
-import { changeActive } from "../../../store/actions/chatActions";
+import {
+  changeActive,
+  getAllUsers,
+  getAllMessages,
+} from "../../../store/actions/chatActions";
+
 class Chats extends Component {
   handleClick = (e) => {
     this.props.changeActive(e.target.id);
+    // console.log("here");
+    // console.log(e.target);
+    const fromPerson = this.props.user.username;
+    const otherPerson = e.target.id;
+    console.log(fromPerson + " " + otherPerson);
+    this.props.getAllMessages({
+      fromPerson,
+      otherPerson,
+    });
   };
   componentDidMount() {
-    // getAllChats();
+    this.props.getAllUsers();
   }
   render() {
-    const { chats } = this.props;
+    const { chats, allUsers } = this.props;
+
     return (
       <div>
-        {chats && chats.length ? (
-          chats.map((chat) => {
+        {allUsers && allUsers.length ? (
+          allUsers.map((chat) => {
             return (
-              <div key={uuidv4()} id={chat.id} onClick={this.handleClick}>
+              <div
+                key={uuidv4()}
+                id={chat.id}
+                name={chat.email}
+                onClick={this.handleClick}
+              >
                 <ChatContact chat={chat} />
               </div>
             );
@@ -34,12 +54,15 @@ const mapStateToProps = (state) => {
   return {
     chats: state.chats.chats,
     active: state.chats.active,
+    allUsers: state.chats.allUsers,
+    user: state.auth.user,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     changeActive: (id) => dispatch(changeActive(id)),
-    // getAllChats: () => dispatch(getAllChats()),
+    getAllUsers: () => dispatch(getAllUsers()),
+    getAllMessages: (payload) => dispatch(getAllMessages(payload)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Chats);

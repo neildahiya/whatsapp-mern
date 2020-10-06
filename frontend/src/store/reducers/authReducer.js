@@ -19,6 +19,7 @@ export const authReducer = (state = initState, action) => {
         registerErrMsg: action.err,
       };
     case "LOGIN_SUCCESS":
+      console.log(action.user);
       return {
         ...state,
         isLoggedIn: true,

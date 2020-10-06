@@ -3,6 +3,8 @@ import "./Messages.styles.scss";
 import { v4 as uuidv4 } from "uuid";
 import io from "socket.io-client";
 import Message from "./Message/Message";
+import { connect } from "react-redux";
+
 class Messages extends Component {
   scrollToBottom = () => {
     this.messagesEnd.scrollIntoView({ behavior: "smooth" });
@@ -16,12 +18,13 @@ class Messages extends Component {
     this.scrollToBottom();
   }
   render() {
-    const { messages } = this.props;
+    let { messages, user } = this.props;
     const socket = io("http://localhost:5000");
     socket.emit("new chat page", {
       personName: messages,
     });
-    // console.log(messages);
+    messages = messages.messages;
+    // console.log(messages.messages);
     return (
       <div className="messages">
         {messages && messages.length ? (
@@ -30,7 +33,7 @@ class Messages extends Component {
               <Message
                 key={uuidv4()}
                 message={message}
-                isSender={message.isSender}
+                isSender={message.fromPerson === user.username}
               />
             );
           })
@@ -47,4 +50,10 @@ class Messages extends Component {
     );
   }
 }
-export default Messages;
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+    messages: state.chats.messages || [],
+  };
+};
+export default connect(mapStateToProps)(Messages);

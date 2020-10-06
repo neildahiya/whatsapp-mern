@@ -17,39 +17,43 @@ const signToken = (userID) => {
   );
 };
 
-userRouter.post("/register", (req, res) => {
-  const { username, email, password, role } = req.body;
+userRouter.post(
+  "/register",
+  // passport.authenticate("local", { session: false }),
+  (req, res) => {
+    const { username, email, password, role } = req.body;
 
-  console.log(req.body);
-  User.findOne({ email }, (err, user) => {
-    if (err) {
-      console.log(err);
-      res
-        .status(500)
-        .json({ message: { msgBody: "Error has occured", msgError: true } });
-    }
-    if (user)
-      res.status(400).json({
-        message: { msgBody: "Email is already taken", msgError: true },
-      });
-    else {
-      const newUser = new User({ username, email, password, role });
-      newUser.save((err) => {
-        if (err)
-          res.status(500).json({
-            message: { msgBody: "Error has occured", msgError: true },
-          });
-        else
-          res.status(201).json({
-            message: {
-              msgBody: "Account successfully created",
-              msgError: false,
-            },
-          });
-      });
-    }
-  });
-});
+    console.log(req.body);
+    User.findOne({ email }, (err, user) => {
+      if (err) {
+        console.log(err);
+        res
+          .status(500)
+          .json({ message: { msgBody: "Error has occured", msgError: true } });
+      }
+      if (user)
+        res.status(400).json({
+          message: { msgBody: "Email is already taken", msgError: true },
+        });
+      else {
+        const newUser = new User({ username, email, password, role });
+        newUser.save((err) => {
+          if (err)
+            res.status(500).json({
+              message: { msgBody: "Error has occured", msgError: true },
+            });
+          else
+            res.status(201).json({
+              message: {
+                msgBody: "Account successfully created",
+                msgError: false,
+              },
+            });
+        });
+      }
+    });
+  }
+);
 
 userRouter.post(
   "/login",
@@ -77,16 +81,34 @@ userRouter.get(
   "/allChats",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    const allUsers = await User.find();
-    res.status(200).send(JSON.stringify(allUsers));
+    try {
+      const allUsers = await User.find();
+      if (allUsers) {
+        res.status(200).send(JSON.stringify(allUsers));
+      } else {
+        throw "Some error occurred";
+      }
+    } catch (err) {
+      res.send(err).status(500);
+    }
   }
 );
 userRouter.get(
   "/getAllUsers",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    const allUsers = await User.find();
-    res.status(200).send(JSON.stringify(allUsers));
+    // console.log(req.user);
+    try {
+      let allUsers = await User.find();
+      if (allUsers) {
+        allUsers = allUsers.filter((user) => user.email !== req.user.username);
+        res.status(200).send(JSON.stringify(allUsers));
+      } else {
+        throw "Some error occurred";
+      }
+    } catch (err) {
+      res.send(err).status(500);
+    }
   }
 );
 

@@ -12,7 +12,9 @@ class ChatInput extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const messageToSend = {
-      message: this.state.newMessage,
+      text: this.state.newMessage,
+      fromPerson: this.props.user.username,
+      otherPerson: this.props.activeChat.email,
       id: this.props.active,
     };
     this.props.sendMessage(messageToSend);
@@ -24,10 +26,9 @@ class ChatInput extends Component {
     this.setState({
       newMessage: e.target.value,
     });
-    // console.log(this.state);
-    // console.log(this.props);
   };
   render() {
+    // console.log(this.props);
     return (
       <form className="chatinput-search" onSubmit={this.handleSubmit}>
         <EmojiEmotionsOutlinedIcon style={{ fontSize: 30 }} className="icon" />
@@ -49,7 +50,14 @@ class ChatInput extends Component {
 }
 const mapStateToProps = (state) => {
   return {
+    activeChat:
+      state.chats.allUsers.filter((chat) => {
+        return chat._id == state.chats.active;
+      })[0] ||
+      state.chats.allUsers[0] ||
+      null,
     active: state.chats.active,
+    user: state.auth.user,
   };
 };
 const mapDispatchToProps = (dispatch) => {

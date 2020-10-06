@@ -2,6 +2,7 @@ import React from "react";
 import moment from "moment";
 import "./Message.styles.scss";
 const Message = ({ message, isSender }) => {
+  // console.log(message);
   return (
     <div className="message">
       <p

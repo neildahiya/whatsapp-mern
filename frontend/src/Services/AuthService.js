@@ -36,7 +36,7 @@ export default {
     });
   },
   getAllUsers: () => {
-    return fetch("/users/getAllUsers").then((res) => {
+    return fetch("/user/getAllUsers").then((res) => {
       if (res.status !== 401) return res.json().then((data) => data);
       else return { isAuthenticated: false, user: { username: "", role: "" } };
     });
