@@ -24,6 +24,10 @@ class Messages extends Component {
       personName: messages,
     });
     messages = messages.messages;
+    messages &&
+      messages.map((message) => {
+        console.log(message.fromPerson, message.otherPerson, user.username);
+      });
     // console.log(messages.messages);
     return (
       <div className="messages">
@@ -33,7 +37,7 @@ class Messages extends Component {
               <Message
                 key={uuidv4()}
                 message={message}
-                isSender={message.fromPerson === user.username}
+                isSender={message.fromPerson == user.username}
               />
             );
           })

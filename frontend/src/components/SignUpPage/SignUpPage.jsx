@@ -59,11 +59,13 @@ class SignUpPage extends Component {
       role: "admin",
     };
     this.props.register(user);
-    // this.props.history.push("/login");
+    this.props.history.push("/");
   };
   render() {
-    const { classes } = this.props;
-
+    const { classes, isLoggedIn } = this.props;
+    if (isLoggedIn) {
+      this.props.history.push("/chat");
+    }
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -144,6 +146,11 @@ class SignUpPage extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    isLoggedIn: state.auth.isLoggedIn,
+  };
+};
 const mapDispatchToProps = (dispatch) => {
   return {
     register: (user) => dispatch(register(user)),
@@ -152,4 +159,4 @@ const mapDispatchToProps = (dispatch) => {
 export default compose(
   // connect(null, mapDispatchToProps),
   withStyles(useStyles, { withTheme: true })
-)(connect(null, mapDispatchToProps)(SignUpPage));
+)(connect(mapStateToProps, mapDispatchToProps)(SignUpPage));

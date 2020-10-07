@@ -67,22 +67,22 @@ chatRouter.post("/sendMessage", async (req, res) => {
       otherPerson,
       timestamp: new Date().toUTCString(),
     });
-    const revMessage = new Message({
-      text: text,
-      fromPerson: otherPerson,
-      otherPerson: fromPerson,
-      timestamp: new Date().toUTCString(),
-    });
+    // const revMessage = new Message({
+    //   text: text,
+    //   fromPerson: otherPerson,
+    //   otherPerson: fromPerson,
+    //   timestamp: new Date().toUTCString(),
+    // });
     newMessage.save((err) => {
       if (err) {
         throw err;
       }
     });
-    revMessage.save((err) => {
-      if (err) {
-        throw err;
-      }
-    });
+    // revMessage.save((err) => {
+    //   if (err) {
+    //     throw err;
+    //   }
+    // });
     let chat = await Chat.findOne({ otherPerson, fromPerson });
     if (!chat) {
       chat = new Chat({
@@ -107,7 +107,7 @@ chatRouter.post("/sendMessage", async (req, res) => {
       });
       await revChat.save();
     }
-    revChat.messages.push(revMessage);
+    revChat.messages.push(newMessage);
     chat.messages.push(newMessage);
     chat.save((err) => {
       if (err) {
