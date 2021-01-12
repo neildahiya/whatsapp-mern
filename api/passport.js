@@ -19,7 +19,10 @@ passport.use(
       secretOrKey: "NeilDahiya",
     },
     (payload, done) => {
+      console.log("payload= ");
+      console.log(payload);
       User.findById({ _id: payload.sub }, (err, user) => {
+        console.log(user);
         if (err) return done(err, false);
         if (user) return done(null, user);
         else return done(null, false);
@@ -31,11 +34,17 @@ passport.use(
 // authenticated local strategy using username and password
 passport.use(
   new LocalStrategy((username, password, done) => {
-    User.findOne({ username }, (err, user) => {
+    console.log(username, password);
+    User.findOne({ email: username }, (err, user) => {
       // something went wrong with database
-      if (err) return done(err);
+      if (err) {
+        return done(err);
+      }
+      console.log("here");
       // if no user exist
-      if (!user) return done(null, false);
+      if (!user) {
+        return done(null, false);
+      }
       // check if password is correct
       user.comparePassword(password, done);
     });

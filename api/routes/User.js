@@ -68,6 +68,13 @@ userRouter.post(
     }
   }
 );
+userRouter.get(
+  "/getUser",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log("here");
+  }
+);
 
 userRouter.get(
   "/logout",
@@ -99,9 +106,10 @@ userRouter.get(
   async (req, res) => {
     // console.log(req.user);
     try {
+      console.log(req.user);
       let allUsers = await User.find();
       if (allUsers) {
-        allUsers = allUsers.filter((user) => user.email !== req.user.username);
+        allUsers = allUsers.filter((user) => user.email !== req.user.email);
         res.status(200).send(JSON.stringify(allUsers));
       } else {
         throw "Some error occurred";
@@ -154,12 +162,28 @@ userRouter.get(
   }
 );
 
+// userRouter.get(
+//   "/authenticated",
+//   passport.authenticate("jwt", { session: false }),
+//   (req, res) => {
+//     const { username, role } = req.user;
+//     res.status(200).json({ isAuthenticated: true, user: { username, role } });
+//   }
+// );
 userRouter.get(
   "/authenticated",
   passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const { username, role } = req.user;
-    res.status(200).json({ isAuthenticated: true, user: { username, role } });
+  async (req, res) => {
+    try {
+      if (!req.user) {
+        throw "Some error occurred";
+      }
+      const user = req.user;
+      res.status(200).send(JSON.stringify(user));
+    } catch (err) {
+      console.log(err);
+      res.send(err).status(500);
+    }
   }
 );
 

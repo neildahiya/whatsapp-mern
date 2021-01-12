@@ -8,6 +8,7 @@ class Chatarea extends Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     const { activeChat, active } = this.props;
     // console.log(activeChat);

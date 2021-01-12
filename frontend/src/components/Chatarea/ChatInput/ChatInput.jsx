@@ -3,12 +3,17 @@ import "./ChatInput.styles.scss";
 import EmojiEmotionsOutlinedIcon from "@material-ui/icons/EmojiEmotionsOutlined";
 import SendOutlinedIcon from "@material-ui/icons/SendOutlined";
 import { connect } from "react-redux";
-import { sendMessage } from "../../../store/actions/chatActions";
+import {
+  sendMessage,
+  changeActive,
+  getAllMessages,
+} from "../../../store/actions/chatActions";
 
 class ChatInput extends Component {
   state = {
     newMessage: "",
   };
+
   handleSubmit = (e) => {
     e.preventDefault();
     const messageToSend = {
@@ -21,6 +26,11 @@ class ChatInput extends Component {
     this.setState({
       newMessage: "",
     });
+    this.props.getAllMessages({
+      fromPerson: this.props.user.username,
+      otherPerson: this.props.activeChat.email,
+    });
+    // this.props.changeActive(this.props.active);
   };
   handleChange = (e) => {
     this.setState({
@@ -63,6 +73,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     sendMessage: (message) => dispatch(sendMessage(message)),
+    changeActive: (id) => dispatch(changeActive(id)),
+    getAllMessages: (payload) => dispatch(getAllMessages(payload)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ChatInput);

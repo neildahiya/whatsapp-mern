@@ -16,6 +16,7 @@ class Messages extends Component {
 
   componentDidUpdate() {
     this.scrollToBottom();
+    console.log(this.props);
   }
   render() {
     let { messages, user } = this.props;
@@ -57,7 +58,7 @@ class Messages extends Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
-    messages: state.chats.messages || [],
+    messages: state.chats.messages,
   };
 };
 export default connect(mapStateToProps)(Messages);

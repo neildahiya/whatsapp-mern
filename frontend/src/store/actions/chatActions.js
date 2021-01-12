@@ -35,7 +35,7 @@ export const sendMessage = (payload) => async (dispatch) => {
     // console.log(response);
     dispatch({ type: "SEND_MESSAGE", payload });
   } catch (err) {
-    // console.log(err);
+    console.log(err);
     dispatch({ type: "ERROR_SENDING_MESSAGE", err });
   }
 };

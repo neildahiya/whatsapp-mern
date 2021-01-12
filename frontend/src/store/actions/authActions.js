@@ -16,3 +16,11 @@ export const login = (user) => async (dispatch) => {
     dispatch({ type: "LOGIN_FAILED", err });
   }
 };
+export const isAuthenticated = () => async (dispatch) => {
+  try {
+    const response = await AuthService.isAuthenticated();
+    dispatch({ type: "GOT_CURRENT_USER", response });
+  } catch (err) {
+    dispatch({ type: "SERVER_ERROR", err });
+  }
+};

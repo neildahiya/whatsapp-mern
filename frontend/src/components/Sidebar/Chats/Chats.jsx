@@ -3,31 +3,43 @@ import ChatContact from "../ChatContact/ChatContact";
 import "./Chats.styles.scss";
 import { v4 as uuidv4 } from "uuid";
 import { connect } from "react-redux";
+import axios from "axios";
 import {
   changeActive,
   getAllUsers,
   getAllMessages,
 } from "../../../store/actions/chatActions";
+import { isAuthenticated } from "../../../store/actions/authActions";
 
 class Chats extends Component {
   handleClick = (e) => {
     this.props.changeActive(e.target.id);
-    // console.log("here");
-    // console.log(e.target);
     const fromPerson = this.props.user.username;
     const otherPerson = e.target.id;
-    console.log(fromPerson + " " + otherPerson);
+
     this.props.getAllMessages({
       fromPerson,
       otherPerson,
     });
   };
   componentDidMount() {
+    this.props.isAuthenticated();
     this.props.getAllUsers();
+    setTimeout(() => {
+      // console.log(this.props.allUsers[0]._id)
+      this.props.changeActive(this.props.allUsers[0]._id);
+      const fromPerson = this.props.user.username;
+      const otherPerson = this.props.allUsers[0]._id;
+
+      this.props.getAllMessages({
+        fromPerson,
+        otherPerson,
+      });
+    }, 1000);
   }
   render() {
     const { chats, allUsers } = this.props;
-
+    // console.log(allUsers);
     return (
       <div>
         {allUsers && allUsers.length ? (
@@ -61,6 +73,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     changeActive: (id) => dispatch(changeActive(id)),
+    isAuthenticated: () => dispatch(isAuthenticated()),
     getAllUsers: () => dispatch(getAllUsers()),
     getAllMessages: (payload) => dispatch(getAllMessages(payload)),
   };
